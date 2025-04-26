@@ -2,7 +2,11 @@
 <ruleset name="Symfony Project">
   <description>Code style for Symfony project</description>
 
-  <rule ref="Symfony" />
+  <rule ref="Symfony">
+    <exclude name="Symfony.Commenting.ClassComment"/>
+    <exclude name="Symfony.Commenting.FunctionComment"/>
+    <exclude name="Symfony.Commenting.License"/>
+  </rule>
 
   <file>src</file>
   <file>tests</file>
