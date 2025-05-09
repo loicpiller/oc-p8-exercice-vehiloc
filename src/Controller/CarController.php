@@ -10,23 +10,33 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class CarController extends AbstractController
 {
-    #[Route('/car/{id}', name: 'car_details', requirements: ['id' => '\d+'])]
-    public function details(int $id, CarRepository $carRepository): Response
+
+    private CarRepository $carRepository;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(CarRepository $carRepo, EntityManagerInterface $entityManager)
     {
-        $data['car'] = $carRepository->find($id);
+        $this->carRepository = $carRepo;
+        $this->entityManager = $entityManager;
+    }
+
+    #[Route('/car/{id}', name: 'car_details', requirements: ['id' => '\d+'])]
+    public function details(int $id): Response
+    {
+        $data['car'] = $this->carRepository->find($id);
         $data['car'] ?? throw $this->createNotFoundException("Car not found.");
 
         return $this->render('car/details.html.twig', $data);
     }
 
     #[Route('car/{id}/delete', name: 'car_delete', requirements: ['id' => '\d+'])]
-    public function delete(int $id, CarRepository $carRepository, EntityManagerInterface $entityManager): Response
+    public function delete(int $id): Response
     {
-        $car = $carRepository->find($id);
+        $car = $this->carRepository->find($id);
         $car ?? throw $this->createNotFoundException("Car not found.");
 
-        $entityManager->remove($car);
-        $entityManager->flush();
+        $this->entityManager->remove($car);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('app_home');
     }
