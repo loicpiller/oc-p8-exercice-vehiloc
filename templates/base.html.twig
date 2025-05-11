@@ -15,7 +15,7 @@
         <header>
             <nav>
                 <a href="{{ absolute_url(path('app_home')) }}"><img src="{{ asset("img/logo.png") }}" alt="Vehicloc" /></a>
-                <a href="add.html" class="btn-nav">Ajouter une voiture</a>
+                <a href="{{ path('car_create') }}" class="btn-nav">Ajouter une voiture</a>
             </nav>
             {% block hero %}
             {% endblock %}
