@@ -31,6 +31,10 @@ header nav {
     justify-content: space-between;
 }
 
+button {
+    cursor: pointer;
+}
+
 .flex-header {
     display: flex;
     justify-content: space-between;
